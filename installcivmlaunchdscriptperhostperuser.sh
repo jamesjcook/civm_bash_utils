@@ -1,5 +1,5 @@
 #!/bin/bash
-# installcivmlaunchdscript.txt
+# installcivmlaunchdscriptperuserperhost.sh
 # requires sudo access to cp file
 # James Cook
 # -installs a plist file and loads/starts it for the purpose of udpating them.
@@ -20,22 +20,15 @@ newfilename="${file_template%\.computer.*}.`hostname -s`.`whoami`.plist"
 
 if [ -z `ls $newfilename` ] 
 then 
-    echo coping new file
+    echo Couldnt find ${newfilenam},coping template into ${newfilename}
     echo cp $file_template $newfilename
     cp $file_template $newfilename 
 fi
 
-
-name=`whoami`
-host=`hostname -s`
-
-file=` ls configs/*${host}*${name}*plist `
-file=`basename $file`
-
-echo file is now $file 
+echo plist now $newfilename
 # figure out a clever way to change the plist file name to reflect computer/purpose/user  replace computer with hostname -s and user with whoami
 
 #simple script to put plist in place after its renamed properly
-emacs $file
-sudo cp $file /Library/LaunchDaemons/.
+$EDITOR $newfilename
+sudo cp $newfilename /Library/LaunchDaemons/.
 ./restartscheduler.sh

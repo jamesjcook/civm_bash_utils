@@ -11,7 +11,7 @@
 name=`whoami`
 host=`hostname -s`
 
-file=` ls configs/*${host}*${name}*plist `
+file=`ls configs/*${host}*${name}*plist`
 file=`basename $file`
 
 mainscript=`ls -d civm* | grep -v"~"`
