@@ -1,0 +1,5 @@
+This is a library for shell scripts.
+Most functions are included in the functions file.
+Some auxilary utility is contained in the other scripts dealing with OSX launchd.
+Specifically these other scripts make up james's framework for checkin up on 
+and controlling launchdscripts, including default installers and others.
