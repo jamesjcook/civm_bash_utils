@@ -19,7 +19,6 @@ then
     file=`ls configs/*${host}*plist` # each host has a different config
 else
     file=`ls configs/*${host}*${name}*plist | wc -l` #each user on a host has a different config
-then
 fi
 
 file=`basename $file`
