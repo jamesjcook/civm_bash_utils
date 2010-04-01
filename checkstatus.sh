@@ -1,7 +1,10 @@
 #!/bin/bash
 # checkstatus.sh for launchd script 
+name=`whoami`
+host=`hostname -s`
 
-file=`ls *.plist`
+file=` ls configs/*${host}*${name}*plist `
+file=`basename $file`
 
 echo project plist is $file 
 echo Project launchctl entry 
