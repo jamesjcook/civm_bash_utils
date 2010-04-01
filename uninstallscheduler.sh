@@ -7,6 +7,7 @@
 # It should be run from the directory of the plist you wish to modify.
 
 
+
 name=`whoami`
 host=`hostname -s`
 

@@ -5,6 +5,9 @@
 # It should be run from the install directory
 # it cleverly starts it no matter what the name so this little file can be copied to almost any launchd program
 
+
+
+
 name=`whoami`
 host=`hostname -s`
 

@@ -8,14 +8,14 @@
 # modify the plist file to point to the script called 
 # name the plist approiately, generally, com.civm.<purpose>.<computer>.<user>.[folder.]plist
 # modify the plist <label> field to match the filename,
-
-mainscript=`ls -d civm* | grep -v"~"`
-mainscriptdir=${mainscript%.*}
 name=`whoami`
 host=`hostname -s`
 
 file=` ls configs/*${host}*${name}*plist `
 file=`basename $file`
+
+mainscript=`ls -d civm* | grep -v"~"`
+mainscriptdir=${mainscript%.*}
 
 echo ln -shf `pwd` /Users/Shared/$mainscriptdir
 ln -shf `pwd` /Users/Shared/$mainscriptdir

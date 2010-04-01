@@ -1,5 +1,13 @@
 #!/bin/bash
 # checkstatus.sh for launchd script 
+
+
+
+
+
+
+
+
 name=`whoami`
 host=`hostname -s`
 

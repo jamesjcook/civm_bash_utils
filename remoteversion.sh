@@ -4,10 +4,12 @@
 # Utility script to get remote configs and check them against the local 
 # copies to see if users have updated their configs
 ##############################################################################
-FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-STARTDIR=`dirname "$FULLPATH"`
+#FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+#STARTDIR=`dirname "$FULLPATH"`
+
+STARTDIR=$PWD
 SCRIPTNAME=`basename $STARTDIR`
-. $STARTDIR/functionscivmscript.bash
+. $STARTDIR/lib/functionscivmscript.bash
 
 whathosts  # sets $distributionlist
 
