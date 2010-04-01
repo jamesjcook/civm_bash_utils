@@ -25,7 +25,13 @@ then
     cp $file_template $newfilename 
 fi
 
-file=`ls *.plist`
+
+name=`whoami`
+host=`hostname -s`
+
+file=` ls configs/*${host}*${name}*plist `
+file=`basename $file`
+
 echo file is now $file 
 # figure out a clever way to change the plist file name to reflect computer/purpose/user  replace computer with hostname -s and user with whoami
 

@@ -11,7 +11,12 @@
 
 mainscript=`ls -d civm* | grep -v"~"`
 mainscriptdir=${mainscript%.*}
-file=`ls *.plist`
+name=`whoami`
+host=`hostname -s`
+
+file=` ls configs/*${host}*${name}*plist `
+file=`basename $file`
+
 echo ln -shf `pwd` /Users/Shared/$mainscriptdir
 ln -shf `pwd` /Users/Shared/$mainscriptdir
 #simple script to put plist in place after its renamed properly
