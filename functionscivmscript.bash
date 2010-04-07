@@ -478,9 +478,9 @@ function display_usage ()
     >&2 echo "${usage_indent}[-C localcollaborator] "
     >&2 echo "${usage_indent}([-f inactive] | [-e expire] |  [-T timeframe] )"
     >&2 echo "${usage_indent}[-p passwd] user"
-    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpnoncivm -r "Full Name" -c "brain atlasing" -C localCollaborator fname "
-    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp,ftpnoncivm -r "Full Name" -c "brain atlasing" -C localCollaborator fname "
-    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp -r "Local User" luser "
+    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpnoncivm -r "Full Name" -c \"brain atlasing\" -C localCollaborator fname "
+    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp,ftpnoncivm -r \"Full Name\" -c \"brain atlasing\" -C localCollaborator fname "
+    >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp -r \"Local User\" luser "
     exit $1
 }
 ###
