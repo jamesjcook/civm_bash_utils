@@ -389,7 +389,7 @@ function get_free_uid ()
     
     continue="no"
     number_used="dontknow"
-    fnumber=1000
+    fnumber=6000
     until [ $continue = "yes" ] ; do
 	if [ `$dscl . -list ${dsclroot}/Users uid | $sed -e 's/blank:\{1,\}/:/g' | $cut -f 2 -d : | $grep -c "^$fnumber$"` -gt 0 ] ;
 	then 
