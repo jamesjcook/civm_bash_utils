@@ -15,7 +15,7 @@ mainscriptdir=${mainscript%.*}
 echo ln -shf `pwd` /Users/Shared/$mainscriptdir
 ln -shf `pwd` /Users/Shared/$mainscriptdir
 
-file_template=`ls *.plist_template`
+file_template=`ls configs/*.plist_template`
 newfilename="${file_template%\.computer.*}.`hostname -s`.`whoami`.plist"
 
 if [ -z `ls $newfilename` ] 

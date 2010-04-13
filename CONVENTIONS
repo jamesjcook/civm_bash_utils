@@ -1,8 +1,9 @@
-The utility scripts are generalized so that any script made this way will work. 
+===Default utility scripts===
+These utility scripts are generalized so that any script made this way will work.
 So install and restart both rely on the following assumptions
-there is only one file of the form 
+there is only one file of the form <br/>
 <.*>.plist  - launchd automation to be placed in /Library/LaunchDaemons
-there is only one file of the form 
+there is only one file of the form <br/>
 civm* this is the main script and a link will be created to its parent directory in /Users/Shared/scriptname  
 <SCRIPTNAMEDIR>.sh  - main script
 
@@ -10,15 +11,18 @@ Some files should just be links back to the civmlibrary in james's home director
 other scripts in this directory should start with something differnt 
 
 distributionlist.sh                          file containing the hostname -s_user entries for each computer a given program/script is deployed on.
-===Default utility scripts===
-startlaunchdscripts.sh                       run program
-checkstatus.sh                               check contents of scheduler and contents in system and check that its loadded
-restartscheduler.sh                          restart scheduler (stopscheduler, and start scheduler)
-uninstallscheduler.sh                        uninstall scheduler (stopscheduler, and remove)
-stopscheduler.sh                             stop scheduler   (stop program and unload scheduler)
-startcheduler.sh                             start scheduler  (load scheduler)
-installscheduler.sh                          install scheduler  (stopscheduler, and copy, and startscheduler)
-installcivmlaunchdscript.txt                 install program to the default location and install the scheduler 
-installcivmlaunchdscript_blind.txt           install program to the default location and install the scheduler
-installcivmlaunchdscriptperhostperuser.txt   install program to the default location and install the scheduler
-functionscivmlaunchdscript.bash              functions for launchdscripts, dealing with configs among other things, a global functions file, so i'm more likley to reuse well coded functions
+
+| *Scriptname*                                | *function* |
+| startlaunchdscripts.sh                      | run program with parameters from scheduler |
+| checkstatus.sh                              | check contents of scheduler and contents in system and check that its loaded, can tell if its running currently |
+| restartscheduler.sh                         | restart scheduler (stopscheduler, and start scheduler) doesnt run program |
+| uninstallscheduler.sh                       | uninstall scheduler (stopscheduler, and remove) |
+| stopscheduler.sh                            | stop scheduler   (stop program and unload scheduler) |
+| startcheduler.sh                            | start scheduler  (load scheduler) |
+| installscheduler.sh                         | install scheduler  (stopscheduler, and copy, and startscheduler) | 
+| fetchremoteconfigs.sh			      | check if remote configurations are modified, looks at distributionlist.sh to find hosts | 
+| remoteversions.sh			      | checks remote versions against current version | 
+| installcivmlaunchdscript.txt                | install program to the default location and install the scheduler | 
+| installcivmlaunchdscript_blind.txt          | install program to the default location and install the scheduler | 
+| installcivmlaunchdscriptperhostperuser.txt  | install program to the default location and install the scheduler | 
+| functionscivmlaunchdscript.bash             | functions for launchdscripts, dealing with configs among other things, a global functions file, so i'm more likley to reuse well coded functions | 

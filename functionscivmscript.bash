@@ -7,6 +7,7 @@
 # check_errs - checks last command for error. Takes two arguments , error code, message
 #
 # whatconfigs - gets the configs from to use from $1/configs/* . Takes one argument, script directory
+# findplist - finds the approiate plist to use. Takes one argument, script directory.
 # whathosts - gets the list of hosts from distributionlist.sh
 #
 # loadvars - loads whatever is in the config file... should probably fix this up to onl load variables
@@ -143,7 +144,25 @@ function whatconfigs ()
     fi
 
 }
+###
+# findplist
+###
+# takes the directory the plist lives in
+# finds the plist for this script for this user/host combo 
+# should only find one plist
+function findplist ()
+{
+    if [ `ls $1/*plist | wc -l` == "1" ]
+    then
+	plistfile=` ls $1/*plist`  # One config to rule them all.
+    elif [ `ls $1/*${host}*plist | wc -l` == "1" ]
+    then
+	plistfile=`ls $1/*${host}*plist` # each host has a different config
+    else
+	plistfile=`ls $1/*${host}*${name}*plist | wc -l` #each user on a host has a different config
+    fi
 
+}
 ###
 # whathosts
 ###

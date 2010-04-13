@@ -8,22 +8,28 @@
 
 
 
+###
+# STARTDIR Var very imporant, must use these line exactly if using functionscivmscript.bash
+###
+FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+STARTDIR=`dirname "$FULLPATH"`
+
+###
+# load common function
+###
+. $STARTDIR/lib/functionscivmscript.bash
+
+
 name=`whoami`
 host=`hostname -s`
 
-if [ `ls configs/*plist | wc -l` == "1" ]
-then
-    file=` ls configs/*plist`  # One config to rule them all.
-elif [ `ls configs/*${host}*plist | wc -l` == "1" ]
-then
-    file=`ls configs/*${host}*plist` # each host has a different config
-else
-    file=`ls configs/*${host}*${name}*plist | wc -l` #each user on a host has a different config
-fi
+findplist   # finds the approiate file
+file=$plistfile
 
 file=`basename $file`
 
 ./stopscheduler.sh   # stops, unloads
-echo removing $file
+
+echo removing $file (you must be an admin or at least have sudo access)
 sudo rm /Library/LaunchDaemons/$file 
 
