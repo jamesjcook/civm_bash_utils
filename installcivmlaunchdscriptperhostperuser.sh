@@ -9,7 +9,7 @@
 # modify the plist file to point to the script called 
 # name the plist approiately, generally, com.civm.<purpose>.<computer>.<user>.[folder.]plist
 # modify the plist <label> field to match the filename,
-
+STARTDIR=$PWD
 mainscript=`ls -d civm* | grep -v "\~"`
 mainscriptdir=${mainscript%.*}
 echo ln -shf `pwd` /Users/Shared/$mainscriptdir
