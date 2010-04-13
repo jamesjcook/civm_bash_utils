@@ -21,4 +21,4 @@ echo ln -shf `pwd` /Users/Shared/$mainscriptdir
 ln -shf `pwd` /Users/Shared/$mainscriptdir
 #simple script to put plist in place after its renamed properly
 
-./installscheduler.sh
+./lib/installscheduler.sh

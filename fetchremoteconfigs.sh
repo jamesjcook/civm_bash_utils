@@ -8,7 +8,7 @@
 #STARTDIR=`dirname "$FULLPATH"`
 STARTDIR=$PWD
 SCRIPTNAME=`basename $STARTDIR`
-. $STARTDIR/functionscivmscript.bash
+. $STARTDIR/lib/functionscivmscript.bash
 
 whathosts  # sets $distributionlist
 

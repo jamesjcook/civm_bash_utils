@@ -31,4 +31,4 @@ echo plist now $newfilename
 #simple script to put plist in place after its renamed properly
 $EDITOR $newfilename
 sudo cp $newfilename /Library/LaunchDaemons/.
-./restartscheduler.sh
+./lib/restartscheduler.sh

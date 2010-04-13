@@ -36,4 +36,4 @@ echo ln -shf `pwd` /Users/Shared/$mainscript
 # check if user is part of admin group, or root, 
 sudo cp $file /Library/LaunchDaemons/.
 #else say failed. must be an admin
-./installscheduler.sh
+./lib/installscheduler.sh
