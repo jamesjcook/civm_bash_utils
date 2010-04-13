@@ -6,6 +6,7 @@
 # It should be run from the install directory
 
 STARTDIR=$PWD
+echo Started from $STARTDIR
 #SCRIPTNAME=`basename $STARTDIR`
 #. $STARTDIR/lib/functionscivmscript.bash
 

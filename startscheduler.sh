@@ -11,8 +11,9 @@
 ###
 # STARTDIR Var very imporant, must use these line exactly if using functionscivmscript.bash
 ###
-FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-STARTDIR=`dirname "$FULLPATH"`
+#FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+#STARTDIR=`dirname "$FULLPATH"`
+STARTDIR=$PWD
 
 ###
 # load common function
@@ -23,7 +24,7 @@ STARTDIR=`dirname "$FULLPATH"`
 name=`whoami`
 host=`hostname -s`
 
-findplist   # finds the approiate file
+findplist configs  # finds the approiate file
 file=$plistfile
 
 file=`basename $file`

@@ -5,14 +5,14 @@
 # It should be run from the install directory
 # it cleverly starts it no matter what the name so this little file can be copied to almost any launchd program
 
-
-
-
 ###
 # STARTDIR Var very imporant, must use these line exactly if using functionscivmscript.bash
 ###
-FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-STARTDIR=`dirname "$FULLPATH"`
+#FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+#STARTDIR=`dirname "$FULLPATH"`
+STARTDIR=$PWD
+
+echo $0 STARTDIR $STARTDIR
 
 ###
 # load common function
@@ -23,7 +23,7 @@ STARTDIR=`dirname "$FULLPATH"`
 name=`whoami`
 host=`hostname -s`
 
-findplist   # finds the approiate file
+findplist configs  # finds the approiate file
 file=$plistfile
 
 file=`basename $file`

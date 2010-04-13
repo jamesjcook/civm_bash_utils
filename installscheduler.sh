@@ -23,7 +23,7 @@ STARTDIR=`dirname "$FULLPATH"`
 name=`whoami`
 host=`hostname -s`
 
-findplist   # finds the approiate file
+findplist configs  # finds the approiate file
 file=$plistfile
 
 file=`basename $file`
