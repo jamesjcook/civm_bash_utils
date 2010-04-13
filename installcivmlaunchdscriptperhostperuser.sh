@@ -29,6 +29,13 @@ echo plist now $newfilename
 # figure out a clever way to change the plist file name to reflect computer/purpose/user  replace computer with hostname -s and user with whoami
 
 #simple script to put plist in place after its renamed properly
+echo "Attempting to use editor variable to open $newfilename likley to fail"
 $EDITOR $newfilename
+if [ "$?" -ge 1 ]
+then
+    echo failed to open with EDITOR environment variable, using vi
+    vi $newfilename
+fi
+echo copying $newfilename to system
 sudo cp $newfilename /Library/LaunchDaemons/.
 ./lib/restartscheduler.sh
