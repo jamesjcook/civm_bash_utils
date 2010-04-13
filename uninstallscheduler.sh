@@ -28,7 +28,7 @@ file=$plistfile
 
 file=`basename $file`
 
-./lib/stopscheduler.sh   # stops, unloads
+$STARTDIR/lib/stopscheduler.sh   # stops, unloads
 
 echo removing $file (you must be an admin or at least have sudo access)
 sudo rm /Library/LaunchDaemons/$file 

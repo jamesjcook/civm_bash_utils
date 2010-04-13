@@ -38,4 +38,4 @@ then
 fi
 echo copying $newfilename to system
 sudo cp $newfilename /Library/LaunchDaemons/.
-./lib/restartscheduler.sh
+$STARTDIR/lib/restartscheduler.sh

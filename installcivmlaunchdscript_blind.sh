@@ -1,4 +1,4 @@
-#!/bin/bash
+S#!/bin/bash
 # installcivmlaunchdscript_blind.txt
 # James Cook
 # -installs a plist file and loads/starts it for the purpose of udpating them.
@@ -36,4 +36,4 @@ echo ln -shf `pwd` /Users/Shared/$mainscript
 # check if user is part of admin group, or root, 
 sudo cp $file /Library/LaunchDaemons/.
 #else say failed. must be an admin
-./lib/installscheduler.sh
+$STARTDIR/lib/installscheduler.sh

@@ -28,7 +28,7 @@ file=$plistfile
 
 file=`basename $file`
 
-./lib/stopscheduler.sh # stops and unloads
+$STARTDIR/lib/stopscheduler.sh # stops and unloads
 
 echo copying $file (you must be an admin or at least have sudo access)
 # could also be done using ln, i should look into that
@@ -36,4 +36,4 @@ echo copying $file (you must be an admin or at least have sudo access)
 sudo cp $file /Library/LaunchDaemons/.
 #else say failed. must be an admin
 
-./lib/startscheduler.sh # loads scheduler, as "starting" the scheduler would start the service and that isnt whats wanted here.
+$STARTDIR/lib/startscheduler.sh # loads scheduler, as "starting" the scheduler would start the service and that isnt whats wanted here.
