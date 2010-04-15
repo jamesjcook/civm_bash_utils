@@ -34,5 +34,15 @@ echo Tag array: ${tagarray[*]}
 echo last index is $lastindex
 if [ "$lasttag" != "$version" ] 
 then # prompt for create tag
-echo last tag was: $lasttag which is not $version
+    echo last tag was: $lasttag which is not $version
+    read -n 1 -p "would you like to create a new tag for version: $version [y/N]
+svn cp $svnurl $tagdir/$version     "  OPTION
+    echo .
+
+    if [ "$OPTION" == "y" -o "$OPTION" == "Y" ]
+    then
+	svn cp $svnurl $tagdir/$version 
+    fi
+else
+    echo last release version $lasttag upto date with version $version
 fi
