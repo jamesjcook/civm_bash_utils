@@ -5,6 +5,7 @@
 # STARTDIR
 # bashsplit - splits a string into an array and returns the array
 # check_errs - checks last command for error. Takes two arguments , error code, message
+# pause - pause with a prompt, takes one argument the prompt text. (really just an alias to read -p) 
 #
 # whatconfigs - gets the configs from to use from $1/configs/* . Takes one argument, script directory
 # findplist - finds the approiate plist to use. Takes one argument, script directory.
@@ -81,6 +82,13 @@ function check_errs()
 	# as a bonus, make our function exit with the right error code.
 	return ${1}
     fi
+}
+###
+# pause ripped from web
+###
+# takes one argument, the prompt. 
+function pause(){
+   read -p ?$*?
 }
 
 ###
@@ -397,30 +405,55 @@ function clearconfigsvars ()
     fi
 }
 ###
-# get a free GID greater than 1000
+# get a free GID greater than $uidstartspace 
 ###
+# requires $uidstartspace be set to the beginning of the search space  
+# sets value CREATEUID 
 function get_free_uid () 
 {
+#    uidstartspace=500 #start search for free number here    set in civmscript.conf
     if [ $DEBUG -ge 100 ]
     then 
 	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
     fi
-    
+    if [ $DEBUG -ge 45 ] 
+    then
+	echo "DEBUG: $DEBUG  Starting uid search at $uidstartspace"
+    fi
     continue="no"
     number_used="dontknow"
-    fnumber=6000
+
     until [ $continue = "yes" ] ; do
-	if [ `$dscl . -list ${dsclroot}/Users uid | $sed -e 's/blank:\{1,\}/:/g' | $cut -f 2 -d : | $grep -c "^$fnumber$"` -gt 0 ] ;
+##	if [ `$dscl $dscldomain -list ${dsclroot}/Users uid | $sed -e 's/blank:\{1,\}/:/g' | $cut -f 2- -d : | $grep -c "^$uidstartspace$"` -gt 0 ] ;
+	if [ `$dscl $dscldomain -list ${dsclroot}/Users uid | $grep -c "$uidstartspace$"` -gt 0 ] ;
 	then 
+	    if [ $DEBUG -ge 75 ] 
+	    then
+		echo "DEBUG: $DEBUG  UID $uidstartspace is used"
+	    fi
 	    number_used=true
 	else
-	    number_used=false
+	    if [ $DEBUG -ge 75 ] 
+	    then
+		echo "DEBUG: $DEBUG  UID $uidstartspace not used"		
+	    fi
+	    if [ $DEBUG -ge 30 ] 
+	    then
+		echo "$uidstartspace not used"
+		read -p "Continue searching?:[Y]" -n 1 UIDCONTSEARCH
+	    fi
+	    if [ "$UIDCONTSEARCH" == "Y" -o "$UIDCONTSEARCH" == "y" ]
+	    then
+		number_used=true
+	    else
+		number_used=false
+	    fi
 	fi
 	if [ $number_used = "true" ] ;
 	then 
-	    fnumber=`$expr $fnumber + 1`
+	    uidstartspace=`$expr $uidstartspace + 1`
 	else
-	    CREATEUID="$fnumber"
+	    CREATEUID="$uidstartspace"
 	    continue="yes"
 	fi
     done;
@@ -437,21 +470,44 @@ function get_free_gid ()
 	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
     fi
     
+    if [ $DEBUG -ge 45 ] 
+    then
+	echo "DEBUG: $DEBUG Starting uid search at $gidstartspace"
+    fi
     continue="no"
     number_used="dontknow"
-    fnumber=500
+#    gidstartspace=500
     until [ $continue = "yes" ] ; do
-	if [ `$dscl . -list ${dsclroot}/Groups gid | $sed -e 's/blank:\{1,\}/:/g' | $cut -f 2 -d : | $grep -c "^$fnumber$"` -gt 0 ] ;
+#	if [ `$dscl $dscldomain -list ${dsclroot}/Groups gid | $sed -e 's/blank:\{1,\}/:/g' | $cut -f 2 -d : | $grep -c "^$gidstartspace$"` -gt 0 ] ;
+	if [ `$dscl $dscldomain -list ${dsclroot}/Groups gid | $grep -c "$gidstartspace$"` -gt 0 ] ;
 	then 
+	    if [ $DEBUG -ge 75 ] 
+	    then
+		echo "DEBUG: $DEBUG  UID $gidstartspace is used"
+	    fi
 	    number_used=true
 	else
-	    number_used=false
+	    if [ $DEBUG -ge 75 ] 
+	    then
+		echo "DEBUG: $DEBUG  GID $gidstartspace not used"		
+	    fi
+	    if [ $DEBUG -ge 30 ] 
+	    then
+		echo "$gidstartspace not used"
+		read -p "Continue searching?:[Y]" -n 1 GIDCONTSEARCH
+	    fi
+	    if [ "$GIDCONTSEARCH" == "Y" -o "$GIDCONTSEARCH" == "y" ]
+	    then
+		number_used=true
+	    else
+		number_used=false
+	    fi
 	fi
 	if [ $number_used = "true" ] ;
 	then 
-	    fnumber=`$expr $fnumber + 1`
+	    gidstartspace=`$expr $gidstartspace + 1`
 	else
-	    group_id="$fnumber"
+	    group_id="$gidstartspace"
 	    continue="yes"
 	fi
     done;
