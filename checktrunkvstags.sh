@@ -16,7 +16,7 @@ tags=`svn list $tagdir | cut -d "/" -f 1`
 index=0
 for tag in $tags
 do    
-    echo Adding $tag to tagarray
+#    echo Adding $tag to tagarray
     tagarray[$index]="$tag"
     ((index=$index+1))
 done
@@ -26,12 +26,13 @@ lastindex=${#tagarray[*]}
 lasttag=${tagarray[$lastindex]}
 
 
-echo Found version: $version
+
 echo Found svn url: $svnurl
 echo Tag dir url: $tagdir
+echo Found version: $version
 echo Found tags: $tags
-echo Tag array: ${tagarray[*]}
-echo last index is $lastindex
+#echo Tag array: ${tagarray[*]}
+#echo last index is $lastindex
 if [ "$lasttag" != "$version" ] 
 then # prompt for create tag
     echo last tag was: $lasttag which is not $version
