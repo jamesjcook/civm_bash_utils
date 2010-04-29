@@ -49,7 +49,7 @@ function bashsplit()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
 #    [:space:]
 
@@ -71,7 +71,7 @@ function check_errs()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     if [ "${1}" -ne "0" ];
     then 
@@ -101,7 +101,7 @@ function whatconfigs ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
 
     HOSTIS=`hostname -s` # a non bash specific way to find the host
@@ -111,31 +111,31 @@ function whatconfigs ()
     #i>&j   fd to fd redirection basics
     exec 50>&2 # save fd 2 into 50
     exec 2>&100  # route fd2 to 100(bit bucket) : )
-    if [ `ls configs/*conf | wc -l` == "1" ]
-    then # if there is only one plist thats the one we want
-	config=`ls configs/*conf`  # One config to rule them all.
+    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "1" ]
+    then # if there is only one config thats the one we want, this bugs because of hostname....
+	config=`ls configs/*conf | grep -v civmscript.conf  `  # One config to rule them all.
 	if [ $DEBUG -ge 25 ]
 	then
-	    echo One config file found. : $config
+	    echo "DEBUG:$DEBUG  One config file found. : $config"
 	fi
     elif [ `ls configs/*${HOSTIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
     then # if there is only one conf with the hostname in it thats the one we want
 	config=`ls configs/*${HOSTIS}*conf `
 	if [ $DEBUG -ge 25 ]
 	then
-	    echo One config file with hostname found. : $config
+	    echo "DEBUG:$DEBUG  One config file with hostname found. : $config"
 	fi
     elif [ `ls configs/*${HOSTIS}*${USERIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
     then
 	config=`ls configs/*${HOSTIS}*${USERIS}*conf `
 	if [ $DEBUG -ge 25 ]
 	then
-	    echo One config file with hostname username found. : $config
+	    echo "DEBUG:$DEBUG  One config file with hostname username found. : $config"
 	fi
     else
 	if [ $DEBUG -ge 15 ]
 	then
-	    echo WARNING: No config file with hostname or hostname username found. 
+	    echo "WARNING:  No config file with hostname or hostname username found. "
 	fi
 	
     fi
@@ -148,7 +148,7 @@ function whatconfigs ()
 #    echo $config   # 1>> $OUTPUT 2>> $OUTPUT                 #test statement
     if [ $DEBUG -ge 25 ]
     then
-	echo "Found config $config"
+	echo "DEBUG:$DEBUG  Found config $config"
     fi
 
 }
@@ -179,7 +179,7 @@ function whathosts()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     distributionlist=`cat $STARTDIR/distributionlist.sh | cut -d "#" -f 1| cut -d"_" -f 1`
 }
@@ -191,7 +191,7 @@ function loadvars ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
 
     . $1  # soucing files
@@ -205,7 +205,7 @@ function fixconfigsvars ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     ###
     # Clean up directories with spaces... somehow
@@ -229,7 +229,7 @@ function escape_sed()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     sed \
 	-e 's/\//\\\//g' \
@@ -246,12 +246,12 @@ function generate_groupvars ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     eval varstogenerate=\${$1[@]}
     if [ $DEBUG -ge 55 ]
     then
-	echo Found Groups: ${varstogenerate[@]}
+	echo "DEBUG:$DEBUG Found Groups: ${varstogenerate[@]}"
 	echo $1
     fi
     for GROUPNAME in ${varstogenerate[@]}
@@ -262,9 +262,9 @@ function generate_groupvars ()
 	eval grouppointer=${GROUPNAME}S
 	if [ $DEBUG -ge 60 ]
 	then
-	    echo Groupname        : ${GROUPNAME}
-	    echo Groupnamepointer : $grouppointer
-	    eval echo Valofpointeddata : \${$grouppointer[@]}
+	    echo "DEBUG:$DEBUG  Groupname        : ${GROUPNAME}"
+	    echo "DEBUG:$DEBUG  Groupnamepointer : $grouppointer"
+	    eval echo "DEBUG:$DEBUG  Valofpointeddata : \${$grouppointer[@]}"
 	fi
 
 
@@ -281,7 +281,7 @@ function generate_groupvars ()
 	    ###
 	    if [ $DEBUG -ge 55 ]
 	    then
-		echo VARIABLENAME is $GROUPNAME$i # this echos the name correctly
+		echo "DEBUG:$DEBUG  VARIABLENAME is $GROUPNAME$i" # this echos the name correctly
 		#varname=$(echo $GROUPNAME$i)
 		# this stores the correct dynamic name in a variable of use as a pointer
 		eval echo contents of $varname \$$varname
@@ -304,7 +304,7 @@ function generate_groupvars ()
 	    eval varnameval=\$$(echo $varname)
 	    if [ $DEBUG -ge 60 ]
 	    then
-		echo varnames $varname value is $varnameval # the value of $groupname$i
+		echo "DEBUG:$DEBUG  varnames $varname value is $varnameval" # the value of $groupname$i
 	    fi
 
 	    # this ${var:+something} is a way to test for
@@ -360,22 +360,22 @@ function configsvars ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
 
     echo "configfiles are $CONFIGFILES"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
     if $jesus==hotdigity
     then
-	echo "sharetype is $SHARETYPE"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
-	echo "servername is $SERVER"   # 1>> $OUTPUT 2>> $OUTPUT        #Debug
-	echo "base mount dir is $SHAREDIR"   # 1>> $OUTPUT 2>> $OUTPUT  #Debug
-	echo "sharename is $SHARENAME"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
-	echo "mountname is $MOUNTNAME"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
-	echo "username is $UNAME"   # 1>> $OUTPUT 2>> $OUTPUT           #Debug
-	echo "password is $PWORD"   # 1>> $OUTPUT 2>> $OUTPUT           #Debug
-	echo "workgroup is $WORKGROUP"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
-	echo "mountopts are $MOUNTOPTS"   # 1>> $OUTPUT 2>> $OUTPUT     #Debug
-	echo "mountpoint is $MOUNTPOINT"   # 1>> $OUTPUT 2>> $OUTPUT    #Debug
+	echo "DEBUG:$DEBUG  sharetype is $SHARETYPE"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
+	echo "DEBUG:$DEBUG  servername is $SERVER"   # 1>> $OUTPUT 2>> $OUTPUT        #Debug
+	echo "DEBUG:$DEBUG  base mount dir is $SHAREDIR"   # 1>> $OUTPUT 2>> $OUTPUT  #Debug
+	echo "DEBUG:$DEBUG  sharename is $SHARENAME"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
+	echo "DEBUG:$DEBUG  mountname is $MOUNTNAME"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
+	echo "DEBUG:$DEBUG  username is $UNAME"   # 1>> $OUTPUT 2>> $OUTPUT           #Debug
+	echo "DEBUG:$DEBUG  password is $PWORD"   # 1>> $OUTPUT 2>> $OUTPUT           #Debug
+	echo "DEBUG:$DEBUG  workgroup is $WORKGROUP"   # 1>> $OUTPUT 2>> $OUTPUT      #Debug
+	echo "DEBUG:$DEBUG  mountopts are $MOUNTOPTS"   # 1>> $OUTPUT 2>> $OUTPUT     #Debug
+	echo "DEBUG:$DEBUG  mountpoint is $MOUNTPOINT"   # 1>> $OUTPUT 2>> $OUTPUT    #Debug
     fi
 }
 ###
@@ -386,7 +386,7 @@ function clearconfigsvars ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     CONFIGFILES="0"
 # mscript vars are irrelevant should find good way to tell what type of script called this function and then act appropiately.
@@ -414,7 +414,7 @@ function get_free_uid ()
 #    uidstartspace=500 #start search for free number here    set in civmscript.conf
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     if [ $DEBUG -ge 45 ] 
     then
@@ -439,7 +439,7 @@ function get_free_uid ()
 	    fi
 	    if [ $DEBUG -ge 30 ] 
 	    then
-		echo "$uidstartspace not used"
+		echo "DEBUG:$DEBUG  $uidstartspace not used"
 		read -p "Continue searching?:[Y]" -n 1 UIDCONTSEARCH
 	    fi
 	    if [ "$UIDCONTSEARCH" == "Y" -o "$UIDCONTSEARCH" == "y" ]
@@ -467,12 +467,12 @@ function get_free_gid ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     
     if [ $DEBUG -ge 45 ] 
     then
-	echo "DEBUG: $DEBUG Starting uid search at $gidstartspace"
+	echo "DEBUG: $DEBUG Starting gid search at $gidstartspace"
     fi
     continue="no"
     number_used="dontknow"
@@ -483,17 +483,13 @@ function get_free_gid ()
 	then 
 	    if [ $DEBUG -ge 75 ] 
 	    then
-		echo "DEBUG: $DEBUG  UID $gidstartspace is used"
+		echo "DEBUG: $DEBUG  GID $gidstartspace is used"
 	    fi
 	    number_used=true
 	else
-	    if [ $DEBUG -ge 75 ] 
-	    then
-		echo "DEBUG: $DEBUG  GID $gidstartspace not used"		
-	    fi
 	    if [ $DEBUG -ge 30 ] 
 	    then
-		echo "$gidstartspace not used"
+		echo "DEBUG:$DEBUG  GID $gidstartspace not used"
 		read -p "Continue searching?:[Y]" -n 1 GIDCONTSEARCH
 	    fi
 	    if [ "$GIDCONTSEARCH" == "Y" -o "$GIDCONTSEARCH" == "y" ]
@@ -520,7 +516,7 @@ function check_uid ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     
     if [ "`whoami`" = root ] ;
@@ -543,16 +539,19 @@ function display_usage ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
-    
+    # :hvVqDR:u:og:G:d:s:r:c:mk:f:e:C:T:p:-:
+    # :hvVqDR:u:og:G:d:s:r:mk:c:C:f:e:T:p:-:
     usage_indent='               '
-    >&2 echo "Usage: $script_name [-u uid [-o]] [-g group] [-G group,...]"
-    >&2 echo "${usage_indent}[-d home] [-m [-k template]] [-s shell] [-r Full Name]"
+    >&2 echo "Usage: $script_name [-v] version [-V] verbose [-q] quiet [-D] debug"
+    >&2 echo "${usage_indent}[-R host] [-u uid [-o]] [-g group] [-G group,...]"
+    >&2 echo "${usage_indent}[-d home] [-s shell][-r Full Name] [-m [-k template]] "
     >&2 echo "${usage_indent}[-c work description] "
     >&2 echo "${usage_indent}[-C localcollaborator] "
     >&2 echo "${usage_indent}([-f inactive] | [-e expire] |  [-T timeframe] )"
     >&2 echo "${usage_indent}[-p passwd] user"
+    >&2 echo "Examples: "
     >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpnoncivm -r "Full Name" -c \"brain atlasing\" -C localCollaborator fname "
     >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp,ftpnoncivm -r \"Full Name\" -c \"brain atlasing\" -C localCollaborator fname "
     >&2 echo "${usage_indent}civmdscluseradd.bash -u 6000 -g ftpgrp -G ftpWgrp -r \"Local User\" luser "
@@ -565,7 +564,7 @@ function get_version ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     version=`ls $SCRIPTDIR/v* | grep -E "^v[0-9]+[.]*[0-9]*" | tail -n 1| cut -d"v" -f2`
     if [ -z "$version" ]
@@ -581,7 +580,7 @@ function display_version ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     
     >&2 echo "$script_name: version $version by Francois Corthay"
@@ -673,21 +672,21 @@ function save_environment ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
-    if [ $DEBUG -ge 20 ]
+    if [ $DEBUG -ge 40 ]
     then
-	echo saving environment
+	echo "DEBUG:$DEBUG  saving environment"
     fi
     calldir=`pwd`
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 45 ]
     then
-	echo "saving current directory $calldir"   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
+	echo "DEBUG:$DEBUG  saving current directory $calldir"   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
     fi
     oldumask=`umask`
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 45 ]
     then
-	echo "saving current umask $oldumask"   # 1>> $OUTPUT 2>> $OUTPUT     #test statement
+	echo "DEBUG:$DEBUG  saving current umask $oldumask"   # 1>> $OUTPUT 2>> $OUTPUT     #test statement
     fi
 }
 ###
@@ -698,23 +697,21 @@ function set_default_environment ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
-    if [ $DEBUG -ge 20 ]
+    if [ $DEBUG -ge 40 ]
     then
-	echo setting environment
+	echo "DEBUG:$DEBUG  setting environment"
     fi
     cd $STARTDIR #set working dir
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 45 ]
     then
-	echo "set current directory to"   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
-	echo `pwd`                        # 1>> $OUTPUT 2>> $OUTPUT  #test statement
+	echo -n "DEBUG:$DEBUG  set current directory to"`pwd`   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
     fi
     umask $civmumask #set umask, this variable should be read from a configuration file
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 45 ]
     then
-	echo "set umask to "   # 1>> $OUTPUT 2>> $OUTPUT             #test statement
-	echo `umask`           # 1>> $OUTPUT 2>> $OUTPUT             #test statement
+	echo "DEBUG:$DEBUG set umask to "`umask`   # 1>> $OUTPUT 2>> $OUTPUT             #test statement
     fi
 }
 ###
@@ -725,18 +722,17 @@ function restore_environment ()
 {
     if [ $DEBUG -ge 100 ]
     then 
-	echo FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
     fi
     umask $oldumask     #restores umask
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 40 ]
     then
-	echo "set umask to"   # 1>> $OUTPUT 2>> $OUTPUT                  #test statement
+	echo "DEBUG:$DEBUG  set umask to"   # 1>> $OUTPUT 2>> $OUTPUT                  #test statement
 	echo `umask`   # 1>> $OUTPUT 2>> $OUTPUT                          #test statement
     fi
     cd $calldir         #bring us back to the directory we called this from
-    if [ $DEBUG -ge 25 ]
+    if [ $DEBUG -ge 45 ]
     then
-	echo "set current directory to"   # 1>> $OUTPUT 2>> $OUTPUT       #test statement
-	echo `pwd`   # 1>> $OUTPUT 2>> $OUTPUT                            #test statement
+	echo "DEBUG:$DEBUG  set current directory to"`pwd`   # 1>> $OUTPUT 2>> $OUTPUT       #test statement
     fi
 }

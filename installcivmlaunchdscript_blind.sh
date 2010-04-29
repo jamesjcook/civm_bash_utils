@@ -1,4 +1,4 @@
-S#!/bin/bash
+#!/bin/bash
 # installcivmlaunchdscript_blind.txt
 # James Cook
 # -installs a plist file and loads/starts it for the purpose of udpating them.
@@ -11,8 +11,9 @@ S#!/bin/bash
 ###
 # STARTDIR Var very imporant, must use these line exactly if using functionscivmscript.bash
 ###
-FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-STARTDIR=`dirname "$FULLPATH"`
+#FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+#STARTDIR=`dirname "$FULLPATH"`
+STARTDIR=$PWD
 
 ###
 # load common function
