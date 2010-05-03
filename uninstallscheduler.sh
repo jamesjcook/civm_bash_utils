@@ -13,6 +13,8 @@
 ###
 FULLPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
 STARTDIR=`dirname "$FULLPATH"`
+STARTDIR=$PWD
+SCRIPTNAME=`basename $STARTDIR`
 
 ###
 # load common function
