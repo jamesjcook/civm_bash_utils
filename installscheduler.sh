@@ -44,4 +44,4 @@ else
     echo "ERROR:  File already exists, if reinstalling or updating run uninstallscheduler.sh first"
 fi
 
-$STARTDIR/lib/startscheduler.sh # loads scheduler, as "starting" the scheduler would start the service and that isnt whats wanted here.
+$STARTDIR/lib/startscheduler.sh # loads/starts scheduler, as "starting" the scheduler would start the service and that isnt whats wanted here.
