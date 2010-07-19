@@ -1,3 +1,4 @@
+#!/bin/bash
 ##############################################################################
 # check trunk vs tags
 # checks the trunk v* file against the tags
@@ -25,25 +26,30 @@ lastindex=${#tagarray[*]}
 ((lastindex=$lastindex-1))
 lasttag=${tagarray[$lastindex]}
 
+isversioncommited=`svn status $version`
 
-
-echo Found svn url: $svnurl
-echo Tag dir url: $tagdir
-echo Found version: $version
-echo Found tags: $tags
+if [ -z "$isversioncommited" ]
+then
+    echo Found svn url: $svnurl
+    echo Tag dir url: $tagdir
+    echo Found version: $version
+    echo Found tags: $tags
 #echo Tag array: ${tagarray[*]}
 #echo last index is $lastindex
-if [ "$lasttag" != "$version" ] 
-then # prompt for create tag
-    echo last tag was: $lasttag which is not $version
-    read -n 1 -p "would you like to create a new tag for version: $version [y/N]
+    if [ "$lasttag" != "$version" ] 
+    then # prompt for create tag
+	echo last tag was: $lasttag which is not $version
+	read -n 1 -p "would you like to create a new tag for version: $version [y/N]
 svn cp $svnurl $tagdir/$version     "  OPTION
-    echo .
-
-    if [ "$OPTION" == "y" -o "$OPTION" == "Y" ]
-    then
-	svn cp $svnurl $tagdir/$version 
+	echo .
+	if [ "$OPTION" == "y" -o "$OPTION" == "Y" ]
+	then
+	    svn cp $svnurl $tagdir/$version 
+	fi
+    else
+	echo last release version $lasttag upto date with version $version
     fi
-else
-    echo last release version $lasttag upto date with version $version
+else 
+    echo "Version: $version has not been commited yet, please commit and re run $0"
+    exit 1
 fi

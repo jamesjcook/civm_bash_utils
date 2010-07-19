@@ -23,7 +23,7 @@
 # display_usage - display script usage info, which is embeded in script prior to this being called
 # get_version - gets the civmscript version
 # display_version - display version infol, which is embeded in script prior to this being called
-# find_standard_utils - finds the standard util programs required by script
+# find_standard_utils - finds the standard util programs required by script,(finds GNU utils in system)
 #
 # save_environment - save shell environment
 # set_default_environment - set shell variables for civmautmounter scripts
@@ -40,6 +40,10 @@
 #
 DEBUG=100
 script_name=$0
+
+#last changed revision: svn info | grep "Last Changed Rev:" | cut -d ":" -f 2
+#add to some kind of update code
+
 ###
 # bashsplit
 ###
@@ -111,13 +115,20 @@ function whatconfigs ()
     #i>&j   fd to fd redirection basics
     exec 50>&2 # save fd 2 into 50
     exec 2>&100  # route fd2 to 100(bit bucket) : )
-    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "1" ]
-    then # if there is only one config thats the one we want, this bugs because of hostname....
-	config=`ls configs/*conf | grep -v civmscript.conf  `  # One config to rule them all.
-	if [ $DEBUG -ge 25 ]
+    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "0" ]
+    then # config files must be of form hostname.conf or hostname_user.conf
+	if [ $DEBUG -ge 25 ] 
 	then
-	    echo "DEBUG:$DEBUG  One config file found. : $config"
+	    echo "DEBUG:$DEBUG  No additional config files found"
 	fi
+#    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "1" ]
+#    then # if there is only one config thats the one we want, this bugs because of hostname....
+	# should now check distribution list, for ls configs/*conf | grep -v civmscript.conf | cut -d "." -f1 but this asumes the distributionlist is updated.
+#	config=`ls configs/*conf | grep -v civmscript.conf  `  # One config to rule them all.
+#	if [ $DEBUG -ge 25 ]
+#	then
+#	    echo "DEBUG:$DEBUG  One config file found. : $config"
+#	fi
     elif [ `ls configs/*${HOSTIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
     then # if there is only one conf with the hostname in it thats the one we want
 	config=`ls configs/*${HOSTIS}*conf `

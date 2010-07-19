@@ -14,13 +14,15 @@ SCRIPTNAME=`basename $STARTDIR`
 whathosts  # sets $distributionlist
 
 # if distirbutionlist is not null
-echo $STARTDIR
-echo $SCRIPTNAME
-for host in $distributionlist
-do 
-    echo Checking script $SCRIPTNAME version on $host 
-    mkdir -p /tmp/$SCRIPTNAME/${host}/
-    scp -o "ConnectTimeout=1" -r root@$host:$STARTDIR/v* /tmp/$SCRIPTNAME/${host}/ &> /dev/null
-    echo `ls /tmp/$SCRIPTNAME/$host/v* ` `ls $STARTDIR/v*`
-
-done
+if [ -z "$distributionlist" ]
+then
+    echo $STARTDIR
+    echo $SCRIPTNAME
+    for host in $distributionlist
+    do 
+	echo Checking script $SCRIPTNAME version on $host 
+	mkdir -p /tmp/$SCRIPTNAME/${host}/
+	scp -o "ConnectTimeout=1" -r root@$host:$STARTDIR/v* /tmp/$SCRIPTNAME/${host}/ &> /dev/null
+	echo `ls /tmp/$SCRIPTNAME/$host/v* ` `ls $STARTDIR/v*`
+    done
+fi
