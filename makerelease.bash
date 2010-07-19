@@ -40,7 +40,7 @@ then
 	svn export "${REPOSURL}/${projectname}/tags/${version}" "${releasedir}/${projectname}_${version}"
 	tar -czf "${releasedir}/${projectname}_${version}.tar.gz" "${releasedir}/${projectname}_${version}"
 	read -p "Do you wish to remove ${releasedir}/${projectname}_${version} [Y/n]" -n 1 removetrue
-	if [ "$removetrue"=="n" -o "$removetrue"="N" ]
+	if [ "$removetrue"="n" -o "$removetrue"="N" ]
 	then
 	    echo ""
 	    echo "WARNING:  ${releasedir}/${projectname}_${version} not removed, "
