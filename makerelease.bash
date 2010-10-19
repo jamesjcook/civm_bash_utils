@@ -33,13 +33,16 @@ tags
 $version"
 
 #exit 
-./checktrunkvstags.sh  # make sure release is current.
+./lib/checktrunkvstags.sh  # make sure release is current.
 if [ $? -eq "0" ] 
 then
     if [ ! -d "${releasedir}/${projectname}_${version}" -a ! -e "${releasedir}/${projectname}_${version}.tar.gz" ]
     then
 	svn export "${REPOSURL}/${projectname}/tags/${version}" "${releasedir}/${projectname}_${version}"
-	tar -czf "${releasedir}/${projectname}_${version}.tar.gz" "${releasedir}/${projectname}_${version}"
+	pushd .
+	cd ${releasedir}
+	tar --format posix -czf "${projectname}_${version}.tar.gz" "${projectname}_${version}"
+	popd 
 	read -p "Do you wish to remove ${releasedir}/${projectname}_${version} [Y/n]" -n 1 removetrue
 	echo ""
 	if [ "$removetrue" = n -o "$removetrue" = N ]
@@ -49,6 +52,7 @@ then
 	else
 	    rm -rf "${releasedir}/${projectname}_${version}"
 	fi
+	#scp ${releasedir}/${projectname}_${version}.tar.gz civm:4.ipl@syros:/Volumes/xsyros/Software/civmscriptreleases
     else 
 	echo "ERROR:  previously released, or release previously attempted. Delete directory and tar of last attempt.
     ${releasedir}/${projectname}_${version}
@@ -56,6 +60,7 @@ then
 	exit 1
     fi
     echo "STATUS:  Release tar is ${projectname}_${version}.tar.gz in ${releasedir}/"
+
 #... svn add ${releasedir}/${projectname}_${version}.tar.gz ${REPOSURL}/${projectname}/releases?
 else
     echo "checktrunkvstags failed, fix problem and retry."
