@@ -717,7 +717,7 @@ function set_default_environment ()
     cd $STARTDIR #set working dir
     if [ $DEBUG -ge 45 ]
     then
-	echo -n "DEBUG:$DEBUG  set current directory to"`pwd`   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
+	echo "DEBUG:$DEBUG  set current directory to"`pwd`   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
     fi
     umask $civmumask #set umask, this variable should be read from a configuration file
     if [ $DEBUG -ge 45 ]
