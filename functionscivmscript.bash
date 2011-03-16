@@ -624,6 +624,13 @@ function find_standard_utils ()
 	>&2 echo "$script_name: unable to find/use ditto"
 	exit 10
     fi
+           # find chown
+    chown=`which chown`
+    if [ ! -x "$chown" ] ;
+    then 
+	>&2 echo "$script_name: unable to find/use chown"
+	exit 10
+    fi
            # find cut
     cut=`which cut`
     if [ ! -x "$cut" ] ;
@@ -643,6 +650,13 @@ function find_standard_utils ()
     if [ ! -x "$grep" ] ;
     then 
 	>&2 echo "$script_name: unable to find/use grep"
+	exit 10
+    fi
+           # find mkdir
+    mkdir=`which mkdir`
+    if [ ! -x "$mkdir" ] ;
+    then 
+	>&2 echo "$script_name: unable to find/use mkdir"
 	exit 10
     fi
            # find sed
@@ -674,6 +688,7 @@ function find_standard_utils ()
 	exit 10
     fi
     return 
+
 }
 ###
 # save shell environment
