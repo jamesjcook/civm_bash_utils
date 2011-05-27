@@ -26,6 +26,12 @@ echo stardir is : $STARTDIR
 name=`whoami`
 host=`hostname -s`
 
+if [ `uname` != "Darwin" ]
+then
+    echo "this sceduler script only works for Mac OS X"
+    exit 1
+fi
+
 findplist configs  # finds the approiate file
 file=$plistfile
 

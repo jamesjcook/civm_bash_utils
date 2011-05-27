@@ -29,12 +29,32 @@ file=$plistfile
 
 file=`basename $file`
 
-mainscript=`ls -d civm* | grep -v"~"`
+mainscript=`ls -d civm* | grep -v "~"`
 
-echo ln -shf `pwd` /Users/Shared/$mainscript
+if [ `uname` == "Linux" ]
+then
+    instdir="/opt/"
+    hostopts="n"
+elif [ `uname` == "Darwin" ]
+then
+    instdir="/Users/Shared/"
+    hostopts="h"
+else
+    echo "Unknown os type, not sure where to install, Being lame and bailing for now"
+    exit 1
+fi
+
+
+echo ln -s${hostopts}f `pwd` ${instdir}${mainscript%.*}
+ln -s${hostopts}f `pwd` ${instdir}${mainscript%.*}
 #simple script to put plist in place after its renamed properly
 
 # check if user is part of admin group, or root, 
-sudo cp $file /Library/LaunchDaemons/.
+if [ `uname` == "Darwin" ]
+then
+    sudo cp $file /Library/LaunchDaemons/.
+else
+    echo "Not darwin nothing to do with $file"
+fi
 #else say failed. must be an admin
 $STARTDIR/lib/installscheduler.sh
