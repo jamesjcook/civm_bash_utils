@@ -164,6 +164,74 @@ function whatconfigs ()
 
 }
 ###
+# remoteconfigs
+###
+# puts the config files's path into a variable.
+# takes 1 argument, the civmscript directory
+# Get the configs variable files to load from $1/configs
+function remoteconfigs ()
+{
+    if [ $DEBUG -ge 100 ]
+    then 
+	echo "FUNCTIONCALL: $FUNCNAME :: DEBUGLVL $DEBUG"
+    fi
+    
+    HOSTIS=$2
+    USERIS=`whoami`
+# exec fd direction(<>) filename
+    exec 100>/dev/null  # open devnull(bit bucket) for writing at random fdval
+    #i>&j   fd to fd redirection basics
+    exec 50>&2 # save fd 2 into 50
+    exec 2>&100  # route fd2 to 100(bit bucket) : )
+    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "0" ]
+    then # config files must be of form hostname.conf or hostname_user.conf
+	if [ $DEBUG -ge 25 ] 
+	then
+	    echo "DEBUG:$DEBUG  No additional config files found"
+	fi
+#    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "1" ]
+#    then # if there is only one config thats the one we want, this bugs because of hostname....
+	# should now check distribution list, for ls configs/*conf | grep -v civmscript.conf | cut -d "." -f1 but this asumes the distributionlist is updated.
+#	config=`ls configs/*conf | grep -v civmscript.conf  `  # One config to rule them all.
+#	if [ $DEBUG -ge 25 ]
+#	then
+#	    echo "DEBUG:$DEBUG  One config file found. : $config"
+#	fi
+    elif [ `ls configs/*${HOSTIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
+    then # if there is only one conf with the hostname in it thats the one we want
+	config=`ls configs/*${HOSTIS}*conf `
+	if [ $DEBUG -ge 25 ]
+	then
+	    echo "DEBUG:$DEBUG  One config file with hostname found. : $config"
+	fi
+    elif [ `ls configs/*${HOSTIS}*${USERIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
+    then
+	config=`ls configs/*${HOSTIS}*${USERIS}*conf `
+	if [ $DEBUG -ge 25 ]
+	then
+	    echo "DEBUG:$DEBUG  One config file with hostname username found. : $config"
+	fi
+    else
+	if [ $DEBUG -ge 15 ]
+	then
+	    echo "WARNING:  No config file with hostname or hostname username found. "
+	fi
+	
+    fi
+    exec 100>&- #close bitbucket
+    exec 2>&50 # put stderrback
+    exec 50>&-  # close temp descriptor 
+#    config=`basename $config`
+    check_errs $? "Did not find configuration file  in directory $1/configs/"
+#    echo "config variable has population : "   # 1>> $OUTPUT 2>> $OUTPUT  #test statement
+#    echo $config   # 1>> $OUTPUT 2>> $OUTPUT                 #test statement
+    if [ $DEBUG -ge 25 ]
+    then
+	echo "DEBUG:$DEBUG  Found config $config"
+    fi
+
+}
+###
 # findplist
 ###
 # takes the directory the plist lives in
