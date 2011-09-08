@@ -115,7 +115,7 @@ function whatconfigs ()
     #i>&j   fd to fd redirection basics
     exec 50>&2 # save fd 2 into 50
     exec 2>&100  # route fd2 to 100(bit bucket) : )
-    if [ `ls configs/*conf | grep -v civmscript.conf | wc -l` == "0" ]
+    if [ `ls $1/configs/*conf | grep -v civmscript.conf | wc -l` == "0" ]
     then # config files must be of form hostname.conf or hostname_user.conf
 	if [ $DEBUG -ge 25 ] 
 	then
@@ -129,16 +129,16 @@ function whatconfigs ()
 #	then
 #	    echo "DEBUG:$DEBUG  One config file found. : $config"
 #	fi
-    elif [ `ls configs/*${HOSTIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
+    elif [ `ls $1/configs/*${HOSTIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
     then # if there is only one conf with the hostname in it thats the one we want
-	config=`ls configs/*${HOSTIS}*conf `
+	config=`ls $1/configs/*${HOSTIS}*conf `
 	if [ $DEBUG -ge 25 ]
 	then
 	    echo "DEBUG:$DEBUG  One config file with hostname found. : $config"
 	fi
-    elif [ `ls configs/*${HOSTIS}*${USERIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
+    elif [ `ls $1/configs/*${HOSTIS}*${USERIS}*conf | grep -v "civmscript.conf" | wc -l` == "1" ]
     then
-	config=`ls configs/*${HOSTIS}*${USERIS}*conf `
+	config=`ls $1/configs/*${HOSTIS}*${USERIS}*conf `
 	if [ $DEBUG -ge 25 ]
 	then
 	    echo "DEBUG:$DEBUG  One config file with hostname username found. : $config"
