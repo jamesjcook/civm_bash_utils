@@ -12,6 +12,9 @@ other scripts in this directory should start with something differnt
 
 distributionlist.sh                          file containing the hostname -s_user entries for each computer a given program/script is deployed on.
 
+To use these you should be in the civmscript directory, not the lib directory, and run with lib/scriptname
+<br/>lib should just be a link to ../civmlibrary, it could actually be in lib, but then you'd have a copy for each civmscript.
+
 | *Scriptname*                                | *function* |
 | startlaunchdscripts.sh                      | run program with parameters from scheduler |
 | checkstatus.sh                              | check contents of scheduler and contents in system and check that its loaded, can tell if its running currently |
@@ -20,8 +23,16 @@ distributionlist.sh                          file containing the hostname -s_use
 | stopscheduler.sh                            | stop scheduler   (stop program and unload scheduler) |
 | startcheduler.sh                            | start scheduler  (load scheduler) |
 | installscheduler.sh                         | install scheduler  (stopscheduler, and copy, and startscheduler) | 
+| generateallwiki.bash | generates all twiki page text from the info files in current dir best run only by james on his workspace folder |
+| reinstallscheduler.sh | re-installs schduler, (uninstallscheduler, installscheduler) |
+| checktrunkvstags.bash | tagging script, to tag in svn the current version, controlled through version file, warns for uncommited changes |
+| svncheckallreleases.bash | runs checktrunkvstags.bash on all folders in a folder. |
+| svncomitall.sh | commits all directories in curent directory, with generic "name update message |
+| utilitycivmshellscriptskeleton.sh |  |  
+| makerelease.bash | makes sure current version is commited to svn, tagged in svn, and then bundles it up in a tarbal to somelocation, i think /Users/Shared/civmscripreleases |
+| deployrelease.sh | experimental script, not finished, plan is to copy script to anythign in distributionlist |  
 | fetchremoteconfigs.sh			      | check if remote configurations are modified, looks at distributionlist.sh to find hosts | 
-| remoteversions.sh			      | checks remote versions against current version | 
+| remoteversions.sh			      | checks remote versions against current version, looks at distributionlist.sh to find hosts | 
 | installcivmlaunchdscript.txt                | install program to the default location and install the scheduler | 
 | installcivmlaunchdscript_blind.txt          | install program to the default location and install the scheduler | 
 | installcivmlaunchdscriptperhostperuser.txt  | install program to the default location and install the scheduler | 
