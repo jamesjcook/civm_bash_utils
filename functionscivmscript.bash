@@ -167,8 +167,8 @@ function whatconfigs ()
 # remoteconfigs
 ###
 # puts the config files's path into a variable.
-# takes 1 argument, the civmscript directory
-# Get the configs variable files to load from $1/configs
+# takes 2 arguments, the civmscript directory, and the remote host to load
+# Get the configs variable files to load from $1/configs with name $2
 function remoteconfigs ()
 {
     if [ $DEBUG -ge 100 ]
