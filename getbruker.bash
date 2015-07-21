@@ -20,6 +20,7 @@ brukerscannum=$4
 
 
 brukeruser=nmrsu
+brukeruser=mri
 brukerserver=nemo
 paravisionversion=PV5.1
 
