@@ -19,7 +19,7 @@ brukerstudyname=$3
 brukerscannum=$4
 
 
-brukeruser=nmrsu
+brukeruser=nmrsu # former bruker user
 brukeruser=mri
 brukerserver=nemo
 paravisionversion=PV5.1
